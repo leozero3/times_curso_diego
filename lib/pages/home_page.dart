@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
               return ListTile(
                 leading: Image.network(tabela[time].brasao.toString()),
                 title: Text(tabela[time].nome.toString()),
+                subtitle: Text('Titulos: ${tabela[time].titulos.length}'),
                 trailing: Text(tabela[time].pontos.toString()),
                 onTap: () {
                   Navigator.push(
