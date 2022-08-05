@@ -4,7 +4,6 @@ import 'package:times_curso_diego/models/time.dart';
 import 'package:times_curso_diego/pages/home_controller.dart';
 import 'package:times_curso_diego/pages/time_page.dart';
 import 'package:times_curso_diego/repositories/times_repositoty.dart';
-//home_page
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

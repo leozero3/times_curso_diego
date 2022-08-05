@@ -19,8 +19,10 @@ class _AddTituloPageState extends State<AddTituloPage> {
   final _formKey = GlobalKey<FormState>();
 
   save() {
-    Provider.of<TimesRepository>(context, listen: false)
-        .addTitulo(time: widget.time, titulo: Titulo(ano: _ano.text,campeonato: _campeonato.text));
+    Provider.of<TimesRepository>(context, listen: false).addTitulo(
+      time: widget.time,
+      titulo: Titulo(ano: _ano.text, campeonato: _campeonato.text),
+    );
 
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(

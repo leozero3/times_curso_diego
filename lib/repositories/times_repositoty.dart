@@ -1,5 +1,4 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import '../models/time.dart';
 import '../models/titulo.dart';

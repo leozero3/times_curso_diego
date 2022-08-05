@@ -12,6 +12,7 @@ class Time {
     this.nome,
     this.brasao,
     this.pontos,
-    this.cor, required int idAPI,
+    this.cor,
+    required int idAPI,
   });
 }
