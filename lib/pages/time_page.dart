@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:times_curso_diego/pages/add_titulo_page.dart';
 import 'package:times_curso_diego/repositories/times_repositoty.dart';
 import '../models/time.dart';
-import '../models/titulo.dart';
 
 class TimePage extends StatefulWidget {
   Time? time;

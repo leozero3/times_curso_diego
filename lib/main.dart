@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:times_curso_diego/pages/home_page.dart';
 import 'package:times_curso_diego/repositories/times_repositoty.dart';
@@ -17,13 +18,13 @@ class MeuAplicativo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Brasileirão',
       theme: ThemeData(
           primarySwatch: Colors.deepPurple,
           visualDensity: VisualDensity.adaptivePlatformDensity),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }

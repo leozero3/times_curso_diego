@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:times_curso_diego/models/time.dart';
 import 'package:times_curso_diego/pages/home_controller.dart';
@@ -39,15 +40,22 @@ class _HomePageState extends State<HomePage> {
                 subtitle: Text('Titulos: ${tabela[time].titulos.length}'),
                 trailing: Text(tabela[time].pontos.toString()),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TimePage(
-                        key: Key(tabela[time].nome.toString()),
-                        time: tabela[time],
-                      ),
+                  Get.to(
+                    () => TimePage(
+                      key: Key(tabela[time].nome.toString()),
+                      time: tabela[time],
                     ),
                   );
+
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => TimePage(
+                  //       key: Key(tabela[time].nome.toString()),
+                  //       time: tabela[time],
+                  //     ),
+                  //   ),
+                  // );
                 },
               );
             },
