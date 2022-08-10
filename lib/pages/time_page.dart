@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:times_curso_diego/pages/add_titulo_page.dart';
+import 'package:times_curso_diego/pages/edit_titulo_page.dart';
 import 'package:times_curso_diego/repositories/times_repositoty.dart';
+import 'package:times_curso_diego/widgets/brasao.dart';
 import '../models/time.dart';
 
 class TimePage extends StatefulWidget {
@@ -15,12 +18,15 @@ class TimePage extends StatefulWidget {
 
 class _TimePageState extends State<TimePage> {
   tituloPage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => AddTituloPage(time: widget.time),
-      ),
-    );
+
+    Get.to(()=> AddTituloPage(time: widget.time),);
+
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (_) => AddTituloPage(time: widget.time),
+    //   ),
+    // );
   }
 
   @override
@@ -59,8 +65,9 @@ class _TimePageState extends State<TimePage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(24),
-                  child: Image.network(
-                    widget.time!.brasao!.replaceAll("40x40", "100x100"),
+                  child: Brasao(
+                    image: widget.time!.brasao.toString(),
+                    width: 250,
                   ),
                 ),
                 Text(
@@ -98,6 +105,12 @@ class _TimePageState extends State<TimePage> {
                 leading: const Icon(Icons.emoji_events),
                 title: Text(time.titulos[index].campeonato.toString()),
                 trailing: Text(time.titulos[index].ano.toString()),
+                onTap: () {
+                  Get.to(
+                    EditTituloPage(titulo: time.titulos[index]),
+                    fullscreenDialog: true,
+                  );
+                },
               );
             },
             separatorBuilder: (context, index) => const Divider(),

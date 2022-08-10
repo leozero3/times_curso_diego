@@ -5,6 +5,7 @@ import 'package:times_curso_diego/models/time.dart';
 import 'package:times_curso_diego/pages/home_controller.dart';
 import 'package:times_curso_diego/pages/time_page.dart';
 import 'package:times_curso_diego/repositories/times_repositoty.dart';
+import 'package:times_curso_diego/widgets/brasao.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -35,7 +36,10 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (context, int time) {
               final List<Time> tabela = repositorio.times;
               return ListTile(
-                leading: Image.network(tabela[time].brasao.toString()),
+                leading: Brasao(
+                  image: tabela[time].brasao.toString(),
+                  width: 40,
+                ),
                 title: Text(tabela[time].nome.toString()),
                 subtitle: Text('Titulos: ${tabela[time].titulos.length}'),
                 trailing: Text(tabela[time].pontos.toString()),

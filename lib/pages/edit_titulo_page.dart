@@ -1,50 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:times_curso_diego/models/time.dart';
+import 'package:times_curso_diego/models/titulo.dart';
 import 'package:times_curso_diego/repositories/times_repositoty.dart';
-import '../models/titulo.dart';
 
-class AddTituloPage extends StatefulWidget {
-  Time? time;
+class EditTituloPage extends StatefulWidget {
+  Titulo? titulo;
 
-  AddTituloPage({Key? key, this.time}) : super(key: key);
+  EditTituloPage({Key? key, this.titulo}) : super(key: key);
 
   @override
-  State<AddTituloPage> createState() => _AddTituloPageState();
+  State<EditTituloPage> createState() => _EditTituloPageState();
 }
 
-class _AddTituloPageState extends State<AddTituloPage> {
+class _EditTituloPageState extends State<EditTituloPage> {
   final _campeonato = TextEditingController();
   final _ano = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  save() {
-    Provider.of<TimesRepository>(context, listen: false).addTitulo(
-      time: widget.time,
+  editar() {
+    Provider.of<TimesRepository>(context, listen: false).editTitulo(
       titulo: Titulo(ano: _ano.text, campeonato: _campeonato.text),
+      campeonato: _campeonato.text,
+      ano: _ano.text,
     );
+  }
 
-    Get.back();
-    // Navigator.pop(context);
-
-    Get.snackbar(
-      'Sucesso',
-      'Titulo cadastrado',
-      backgroundColor: Colors.grey[900],
-      colorText: Colors.white,
-      snackPosition: SnackPosition.BOTTOM,
-    );
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   const SnackBar(content: Text('Salvo com sucesso!')),
-    // );
+  @override
+  void initState() {
+    super.initState();
+    _ano.text = widget.titulo!.ano!;
+    _campeonato.text = widget.titulo!.campeonato!;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adicionar Título'),
+        title: const Text('Editar Título'),
+        backgroundColor: Colors.grey[800],
+        actions: [IconButton(onPressed: editar, icon: Icon(Icons.check))],
       ),
       body: Form(
         key: _formKey,
@@ -84,31 +78,31 @@ class _AddTituloPageState extends State<AddTituloPage> {
                 },
               ),
             ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.bottomCenter,
-                margin: const EdgeInsets.all(24),
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      save();
-                    }
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.check),
-                      Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Text(
-                          'Salvar',
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            // Expanded(
+            //   child: Container(
+            //     alignment: Alignment.bottomCenter,
+            //     margin: const EdgeInsets.all(24),
+            //     child: ElevatedButton(
+            //       onPressed: () {
+            //         if (_formKey.currentState!.validate()) {
+            //           editar();
+            //         }
+            //       },
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: const [
+            //           Icon(Icons.check),
+            //           Padding(
+            //             padding: EdgeInsets.all(16),
+            //             child: Text(
+            //               'Salvar',
+            //             ),
+            //           )
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
