@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:times_curso_diego/controllers/theme_controller.dart';
 import 'package:times_curso_diego/models/time.dart';
-import 'package:times_curso_diego/pages/home_controller.dart';
 import 'package:times_curso_diego/pages/time_page.dart';
 import 'package:times_curso_diego/repositories/times_repositoty.dart';
 import 'package:times_curso_diego/widgets/brasao.dart';
@@ -15,19 +15,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var controller;
+  var controller = ThemeController.to;
 
-  @override
-  void initState() {
-    super.initState();
-    controller = HomeController();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   controller = HomeController();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Brasileirão'),
+        actions: [
+          PopupMenuButton(
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (_) => [
+              PopupMenuItem(
+                child: ListTile(
+                  leading: Obx(
+                    () => controller.isDark.value
+                        ? Icon(Icons.brightness_7)
+                        : Icon(Icons.brightness_2),
+                  ),
+                  title: Obx(() => controller.isDark.value ? Text('Light') : Text('Dark')),
+                  onTap: ()=> controller.changeTheme(),
+                ),
+              )
+            ],
+          ),
+        ],
       ),
       body: Consumer<TimesRepository>(
         builder: (context, repositorio, child) {

@@ -38,7 +38,7 @@ class _EditTituloPageState extends State<EditTituloPage> {
       appBar: AppBar(
         title: const Text('Editar Título'),
         backgroundColor: Colors.grey[800],
-        actions: [IconButton(onPressed: editar, icon: Icon(Icons.check))],
+        actions: [IconButton(onPressed: editar, icon: const Icon(Icons.check))],
       ),
       body: Form(
         key: _formKey,
