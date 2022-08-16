@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
+import 'package:times_curso_diego/database/db.dart';
 import '../models/time.dart';
 import '../models/titulo.dart';
 
@@ -8,15 +9,70 @@ class TimesRepository extends ChangeNotifier {
 
   UnmodifiableListView<Time> get times => UnmodifiableListView(_times);
 
-  void addTitulo({Time? time, Titulo? titulo}) {
-    time?.titulos.add(titulo!);
+  Future<void> addTitulo({Time? time, Titulo? titulo}) async {
+    var db = await DB.get();
+    int id = await db.insert('titulos', {
+      'camopeonato': titulo?.campeonato,
+      'ano': titulo?.ano,
+      'time_id': titulo?.id
+    });
+    titulo!.id = id;
+    time!.titulos!.add(titulo);
     notifyListeners();
   }
 
-  void editTitulo({Titulo? titulo, String? ano, String? campeonato}) {
-    titulo!.campeonato = campeonato;
+  Future<void> editTitulo(
+      {Titulo? titulo, String? ano, String? campeonato}) async {
+    var db = await DB.get();
+    await db.update(
+      'titulos',
+      {
+        'camopeonato': campeonato,
+        'ano': ano,
+      },
+      where: 'id = ?',
+      whereArgs: [titulo!.id],
+    );
+    titulo.campeonato = campeonato;
     titulo.ano = ano;
     notifyListeners();
+  }
+
+  TimesRepository() {
+    initRepository();
+  }
+
+  void initRepository() async {
+    var db = await DB.get(); //acessa o dataBase
+    List ts = await db.query('times'); //faz uma QUERY de todos os times
+
+    for (var t in ts) {
+      var time =
+        Time(
+            id: t['id'],
+            nome: t['nome'],
+            brasao: t['brasao'],
+            pontos: t['pontos'],
+            cor: Color(int.parse(t['cor'])),
+            titulos: await getTitulos(t['id']));
+
+      _times.add(time);
+    }
+    notifyListeners();
+  }
+
+  getTitulos(timeId) async {
+    var db = await DB.get();
+    var results =
+        await db.query('titulos', where: 'time_id = ?', whereArgs: [timeId]);
+    List<Titulo> titulos = [];
+    for (var titulo in results) {
+      titulos.add(Titulo(
+          id: titulo['id'],
+          campeonato: titulo['campeonato'],
+          ano: titulo['ano']));
+    }
+    return titulos;
   }
 
   static setupTimes() {
@@ -175,6 +231,4 @@ class TimesRepository extends ChangeNotifier {
       ),
     ];
   }
-
-  TimesRepository() {}
 }

@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                   width: 40,
                 ),
                 title: Text(tabela[time].nome.toString()),
-                subtitle: Text('Titulos: ${tabela[time].titulos.length}'),
+                subtitle: Text('Titulos: ${tabela[time].titulos!.length}'),
                 trailing: Text(tabela[time].pontos.toString()),
                 onTap: () {
                   Get.to(

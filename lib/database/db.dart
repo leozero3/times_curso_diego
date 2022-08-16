@@ -13,6 +13,12 @@ class DB {
     return _database ??= await initDataBase();
   }
 
+  //INSTANCIA PARA PODER FAZER ALTERAÇOES NO BANCO
+  static get() async {
+    return await DB.instance.database;
+  }
+
+  //INICIALIZA E ABRE O BANCO
   initDataBase() async {
     return await openDatabase(join(await getDatabasesPath(), 'dados.db'),
         version: 1, onCreate: (db, versao) async {
@@ -22,6 +28,7 @@ class DB {
     });
   }
 
+  //SETUP INICIAL QUE SERÁ EXECUTADO UMA UNICA VEZ(usando dentro do onCreate)
   setupTimes(db) {
     for (Time time in TimesRepository.setupTimes()) {
       db.insert('times', {
@@ -36,9 +43,9 @@ class DB {
   String get times => '''
     CREATE TABLE times(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      nome TEXT
-      pontos INTEGER
-      brasao TEXT
+      nome TEXT,
+      pontos INTEGER,
+      brasao TEXT,
       cor TEXT
     );
   ''';
@@ -46,9 +53,9 @@ class DB {
   String get titulos => '''
     CREATE TABLE titulos(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      campeonato TEXT
-      ano TEXT
-      time_id INTEGER
+      campeonato TEXT,
+      ano TEXT,
+      time_id INTEGER,
       FOREIGN KEY (time_id) REFERENCES times(id) ON DELETE CASCADE
     );
   ''';
