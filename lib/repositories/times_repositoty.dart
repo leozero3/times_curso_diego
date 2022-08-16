@@ -19,8 +19,8 @@ class TimesRepository extends ChangeNotifier {
     notifyListeners();
   }
 
-  TimesRepository() {
-    _times.addAll([
+  static setupTimes() {
+    return [
       Time(
         nome: 'Flamengo',
         pontos: 0,
@@ -173,6 +173,8 @@ class TimesRepository extends ChangeNotifier {
         cor: Colors.grey[800],
         idAPI: 22,
       ),
-    ]);
+    ];
   }
+
+  TimesRepository() {}
 }
