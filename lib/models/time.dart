@@ -7,8 +7,8 @@ class Time {
   String? brasao;
   int? pontos;
   Color? cor;
+  // int? idAPI;
   List<Titulo>? titulos = [];
-
 
   Time({
     this.id,
@@ -17,6 +17,6 @@ class Time {
     this.pontos,
     this.cor,
     this.titulos,
-    int? idAPI,
+    // this.idAPI,
   });
 }

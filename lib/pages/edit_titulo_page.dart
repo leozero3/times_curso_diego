@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:times_curso_diego/models/titulo.dart';
 import 'package:times_curso_diego/repositories/times_repositoty.dart';
@@ -17,20 +18,24 @@ class _EditTituloPageState extends State<EditTituloPage> {
   final _ano = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  editar() {
-    Provider.of<TimesRepository>(context, listen: false).editTitulo(
-      titulo: Titulo(ano: _ano.text, campeonato: _campeonato.text),
-      campeonato: _campeonato.text,
-      ano: _ano.text,
-    );
-  }
-
   @override
   void initState() {
     super.initState();
     _ano.text = widget.titulo!.ano!;
     _campeonato.text = widget.titulo!.campeonato!;
   }
+
+  editar() {
+    Provider.of<TimesRepository>(context, listen: false).editTitulo(
+      titulo: Titulo(ano: _ano.text, campeonato: _campeonato.text),
+      campeonato: _campeonato.text,
+      ano: _ano.text,
+    );
+
+    Get.back();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +58,7 @@ class _EditTituloPageState extends State<EditTituloPage> {
                   border: OutlineInputBorder(),
                   labelText: 'Ano',
                 ),
-                keyboardType: TextInputType.number,
+                //keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Informe o ano do título';

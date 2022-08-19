@@ -32,9 +32,9 @@ class DB {
   setupTimes(db) {
     for (Time time in TimesRepository.setupTimes()) {
       db.insert('times', {
-        'nome': time.nome,
-        'brasao': time.brasao,
-        'pontos': time.pontos,
+        'nome': time.nome.toString(),
+        'brasao': time.brasao.toString(),
+        'pontos': time.pontos!.toInt(),
         'cor': time.cor.toString().replaceAll('Color(', '').replaceAll(')', ''),
       });
     }
@@ -60,3 +60,5 @@ class DB {
     );
   ''';
 }
+
+
