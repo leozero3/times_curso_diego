@@ -27,7 +27,7 @@ class _EditTituloPageState extends State<EditTituloPage> {
 
   editar() {
     Provider.of<TimesRepository>(context, listen: false).editTitulo(
-      titulo: Titulo(ano: _ano.text, campeonato: _campeonato.text),
+      titulo: widget.titulo,//Titulo(ano: _ano.text, campeonato: _campeonato.text),
       campeonato: _campeonato.text,
       ano: _ano.text,
     );
