@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:times_curso_diego/config.dart';
 import 'package:times_curso_diego/controllers/theme_controller.dart';
 import 'package:times_curso_diego/pages/home_page.dart';
 import 'package:times_curso_diego/repositories/times_repositoty.dart';
+import 'package:times_curso_diego/widgets/check_auth.dart';
 
-void main() {
-  Get.lazyPut<ThemeController>(() => ThemeController());
+Future<void> main() async {
+  await initConfigurations();
 
   runApp(
     ChangeNotifierProvider(
@@ -44,7 +46,7 @@ class MeuAplicativo extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.system,
-      home: const HomePage(),
+      home: CheckAuth(),
     );
   }
 }
