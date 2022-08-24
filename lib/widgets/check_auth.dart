@@ -9,6 +9,6 @@ class CheckAuth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return userIsAutenticated ? HomePage() : AuthenticationPage();
+    return userIsAutenticated ? const HomePage() : AuthenticationPage();
   }
 }

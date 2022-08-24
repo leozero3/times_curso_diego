@@ -30,16 +30,16 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Brasileirão'),
         actions: [
           PopupMenuButton(
-            icon: Icon(Icons.more_vert),
+            icon: const Icon(Icons.more_vert),
             itemBuilder: (_) => [
               PopupMenuItem(
                 child: ListTile(
                   leading: Obx(
                     () => controller.isDark.value
-                        ? Icon(Icons.brightness_7)
-                        : Icon(Icons.brightness_2),
+                        ? const Icon(Icons.brightness_7)
+                        : const Icon(Icons.brightness_2),
                   ),
-                  title: Obx(() => controller.isDark.value ? Text('Light') : Text('Dark')),
+                  title: Obx(() => controller.isDark.value ? const Text('Light') : const Text('Dark')),
                   onTap: ()=> controller.changeTheme(),
                 ),
               )
