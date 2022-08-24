@@ -9,21 +9,38 @@ class AutenticationController extends GetxController {
   var titulo = 'Bem vindo!'.obs;
   var botaoPrincipal = 'Entrar'.obs;
   var appBarButton = 'Cadastre-se'.obs;
-  final isLogin = true.obs;
+  var isLogin = true.obs;
+
+
+
+
 
   @override
-  void onInit() {
+  onInit() {
     super.onInit();
     ever(isLogin, (visible) {
-      titulo.value = visible != null ? 'Bem vindo!' : 'Crie sua Conta';
-      botaoPrincipal.value = visible != null ? 'Entrar' : 'Registre-se';
-      appBarButton.value = visible != null ? 'Cadastre-se' : 'Login';
+
+      titulo.value = visible == true ? 'Bem vindo!' : 'Crie sua Conta';
+      botaoPrincipal.value = visible == true ? 'Entrar' : 'Registre-se';
+      appBarButton.value = visible == true ? 'Cadastre-se' : 'Login';
       formKey.currentState?.reset();
+
+      // if (visible == false) {
+      //   titulo.value = 'Crie sua conta';
+      //   botaoPrincipal.value = 'Registre-se';
+      //   appBarButton.value = 'Login';
+      //   formKey.currentState?.reset();
+      // }else if (visible == true) {
+      //   titulo.value = 'Bem vindo!';
+      //   botaoPrincipal.value = 'Entrar';
+      //   appBarButton.value = 'Cadastre-se';
+      //   formKey.currentState?.reset();
+      // }
     });
   }
 
   login() {
-    print('O Email é ${email.text} e a senha é ${senha.text}');
+    print('O email é ${email.text} e senha ${senha.text}');
   }
 
   toogleRegistrar() {
