@@ -19,7 +19,7 @@ class AuthService extends GetxController {
       if (user != null) {
         userIsAuthenticated.value = true;
       } else {
-        userIsAuthenticated.value = true;
+        userIsAuthenticated.value = false;
       }
     });
   }
