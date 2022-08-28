@@ -5,6 +5,7 @@ import 'package:times_curso_diego/controllers/theme_controller.dart';
 import 'package:times_curso_diego/models/time.dart';
 import 'package:times_curso_diego/pages/time_page.dart';
 import 'package:times_curso_diego/repositories/times_repositoty.dart';
+import 'package:times_curso_diego/service/auth_service.dart';
 import 'package:times_curso_diego/widgets/brasao.dart';
 
 class HomePage extends StatefulWidget {
@@ -39,8 +40,20 @@ class _HomePageState extends State<HomePage> {
                         ? const Icon(Icons.brightness_7)
                         : const Icon(Icons.brightness_2),
                   ),
-                  title: Obx(() => controller.isDark.value ? const Text('Light') : const Text('Dark')),
-                  onTap: ()=> controller.changeTheme(),
+                  title: Obx(() => controller.isDark.value
+                      ? const Text('Light')
+                      : const Text('Dark')),
+                  onTap: () => controller.changeTheme(),
+                ),
+              ),
+              PopupMenuItem(
+                child: ListTile(
+                  leading: const Icon(Icons.exit_to_app),
+                  title: const Text('Sair'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    AuthService.to.logout();
+                  },
                 ),
               )
             ],

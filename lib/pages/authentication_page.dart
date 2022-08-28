@@ -28,70 +28,77 @@ class AuthenticationPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Form(
-        key: controller.formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: TextFormField(
-                  controller: controller.email,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Email'),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Informe o Email corretamente';
-                    }
-                    return null;
-                  }),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: TextFormField(
-                  controller: controller.senha,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Senha'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Informe sua Senha';
-                    } else if (value.length < 6) {
-                      return 'Sua senha deve conter no minimo 6 caracteres';
-                    }
-                    return null;
-                  }),
-            ),
-            Padding(
-              padding: EdgeInsets.all(24),
-              child: ElevatedButton(
-                onPressed: () {
-                  print('1');
-                  if (controller.formKey.currentState!.validate()) {
-                    print('a');
-                    if (controller.isLogin.value) {
-                      controller.login();
-                      print('b');
-                    }
-                  }
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.check),
-                    Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Obx(() => Text(
-                            controller.botaoPrincipal.value,
-                            style: TextStyle(fontSize: 20),
-                          )),
-                    )
-                  ],
+      body: Obx(() => controller.isLoading.value
+            ? Center(
+                child: CircularProgressIndicator())
+            : Form(
+                key: controller.formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: TextFormField(
+                            controller: controller.email,
+                            decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Email'),
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Informe o Email corretamente';
+                              }
+                              return null;
+                            }),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: TextFormField(
+                            controller: controller.senha,
+                            decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Senha'),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Informe sua Senha';
+                              } else if (value.length < 6) {
+                                return 'Sua senha deve conter no minimo 6 caracteres';
+                              }
+                              return null;
+                            }),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (controller.formKey.currentState!.validate()) {
+                              if (controller.isLogin.value) {
+                                controller.login();
+                              } else {
+                                controller.registrar();
+                              }
+                            }
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.check),
+                              Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Obx(() => Text(
+                                      controller.botaoPrincipal.value,
+                                      style: const TextStyle(fontSize: 20),
+                                    )),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            )
-          ],
-        ),
       ),
     );
   }

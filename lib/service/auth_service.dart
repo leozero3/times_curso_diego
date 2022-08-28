@@ -55,7 +55,7 @@ class AuthService extends GetxController {
     }
   }
 
-  logout(String email, String password) async {
+  logout() async {
     try {
       await _auth.signOut();
     } on FirebaseAuthException catch (e) {
