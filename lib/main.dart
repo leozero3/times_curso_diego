@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:times_curso_diego/config.dart';
 import 'package:times_curso_diego/controllers/theme_controller.dart';
-import 'package:times_curso_diego/pages/home_page.dart';
 import 'package:times_curso_diego/repositories/times_repositoty.dart';
 import 'package:times_curso_diego/widgets/check_auth.dart';
 

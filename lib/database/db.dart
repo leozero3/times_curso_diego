@@ -20,7 +20,7 @@ class DB {
 
   //INICIALIZA E ABRE O BANCO
   initDataBase() async {
-    return await openDatabase(join(await getDatabasesPath(), 'dados.db'),
+    return await openDatabase(join(await getDatabasesPath(), 'dadostimes_api1.db'), // return await openDatabase(join(await getDatabasesPath(), 'dados.db'),
         version: 1, onCreate: (db, versao) async {
       await db.execute(times);
       await db.execute(titulos);
@@ -35,6 +35,7 @@ class DB {
         'nome': time.nome.toString(),
         'brasao': time.brasao.toString(),
         'pontos': time.pontos!.toInt(),
+        'idAPI': time.idAPI,
         'cor': time.cor.toString().replaceAll('Color(', '').replaceAll(')', ''),
       });
     }
@@ -46,7 +47,8 @@ class DB {
       nome TEXT,
       pontos INTEGER,
       brasao TEXT,
-      cor TEXT
+      cor TEXT,
+      idAPI INTEGER
     );
   ''';
 

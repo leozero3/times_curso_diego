@@ -17,9 +17,7 @@ class AuthenticationPage extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              print('10');
               controller.toogleRegistrar();
-              print('20');
             },
             style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all<Color>(Colors.white70),
@@ -29,7 +27,7 @@ class AuthenticationPage extends StatelessWidget {
         ],
       ),
       body: Obx(() => controller.isLoading.value
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator())
             : Form(
                 key: controller.formKey,
