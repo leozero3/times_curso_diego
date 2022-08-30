@@ -8,9 +8,11 @@ import 'package:times_curso_diego/database/db_firestore.dart';
 import 'package:times_curso_diego/models/titulo.dart';
 import '../models/time.dart';
 import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 class TimesRepository extends ChangeNotifier {
   final List<Time> _times = [];
+  final loading = ValueNotifier(false);
 
   UnmodifiableListView<Time> get times => UnmodifiableListView(_times);
 
@@ -61,16 +63,34 @@ class TimesRepository extends ChangeNotifier {
     initRepository();
   }
 
+  showLoading(bool valor) {
+    loading.value = valor;
+    notifyListeners();
+  }
+
   updateTabela() async {
+    showLoading(true);
+
+    //CODIGO DIO
+    var http = Dio();
     var response = await http.get(
-      Uri.parse('https://api.api-futebol.com.br/v1/campeonatos/10/fases/168'),
-      headers: {
-        HttpHeaders.authorizationHeader:
-            'Bearer live_b699617e52705c2fb792e0bbefafee'
-      },
-    );
+        'https://api.api-futebol.com.br/v1/campeonatos/10/fases/168',
+        options: Options(headers: {
+          'Authorization': 'Bearer live_b699617e52705c2fb792e0bbefafee',
+        }));
+
+    //CODIGO HTTP
+    // var response = await http.get(
+    //   Uri.parse('https://api.api-futebol.com.br/v1/campeonatos/10/fases/168'),
+    //   headers: {
+    //     HttpHeaders.authorizationHeader:
+    //         'Bearer live_b699617e52705c2fb792e0bbefafee'
+    //   },
+    // );
+
     if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
+      // final json = jsonDecode(response.body);  //CODIGO HTTP
+      final json = response.data;
       final tabela = json['tabela'];
       final db = await DB.get();
 
@@ -84,7 +104,10 @@ class TimesRepository extends ChangeNotifier {
           where: 'idAPI = ?',
           whereArgs: [idAPI],
         );
-
+        Time t = _times.firstWhere((time) => time.idAPI == idAPI);
+        t.pontos = pontos;
+        notifyListeners();
+        showLoading(false);
       });
     } else {
       throw Exception('falha API');

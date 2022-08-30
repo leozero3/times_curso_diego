@@ -28,7 +28,27 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Brasileirão'),
+        title: Consumer<TimesRepository>(
+          builder: (context, repositorio, child) {
+            return repositorio.loading.value
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      ),
+                      Text('Atualizando...'),
+                    ],
+                  )
+                : const Text('Tabela Brasileirão');
+          },
+        ),
         actions: [
           PopupMenuButton(
             icon: const Icon(Icons.more_vert),
@@ -62,40 +82,43 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Consumer<TimesRepository>(
         builder: (context, repositorio, child) {
-          return ListView.separated(
-            itemCount: repositorio.times.length,
-            itemBuilder: (context, int time) {
-              final List<Time> tabela = repositorio.times;
-              return ListTile(
-                leading: Brasao(
-                  image: tabela[time].brasao.toString(),
-                  width: 40,
-                ),
-                title: Text(tabela[time].nome.toString()),
-                subtitle: Text('Titulos: ${tabela[time].titulos!.length}'),
-                trailing: Text(tabela[time].pontos.toString()),
-                onTap: () {
-                  Get.to(
-                    () => TimePage(
-                      key: Key(tabela[time].nome.toString()),
-                      time: tabela[time],
-                    ),
-                  );
+          return RefreshIndicator(
+            onRefresh: () => repositorio.updateTabela(),
+            child: ListView.separated(
+              itemCount: repositorio.times.length,
+              itemBuilder: (context, int time) {
+                final List<Time> tabela = repositorio.times;
+                return ListTile(
+                  leading: Brasao(
+                    image: tabela[time].brasao.toString(),
+                    width: 40,
+                  ),
+                  title: Text(tabela[time].nome.toString()),
+                  subtitle: Text('Titulos: ${tabela[time].titulos!.length}'),
+                  trailing: Text(tabela[time].pontos.toString()),
+                  onTap: () {
+                    Get.to(
+                      () => TimePage(
+                        key: Key(tabela[time].nome.toString()),
+                        time: tabela[time],
+                      ),
+                    );
 
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => TimePage(
-                  //       key: Key(tabela[time].nome.toString()),
-                  //       time: tabela[time],
-                  //     ),
-                  //   ),
-                  // );
-                },
-              );
-            },
-            separatorBuilder: (_, __) => const Divider(),
-            padding: const EdgeInsets.all(16),
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => TimePage(
+                    //       key: Key(tabela[time].nome.toString()),
+                    //       time: tabela[time],
+                    //     ),
+                    //   ),
+                    // );
+                  },
+                );
+              },
+              separatorBuilder: (_, __) => const Divider(),
+              padding: const EdgeInsets.all(16),
+            ),
           );
         },
       ),
