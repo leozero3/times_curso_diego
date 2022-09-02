@@ -302,7 +302,7 @@ class TimesRepository extends ChangeNotifier {
       Time(
         nome: 'Goiás',
         pontos: 0,
-        brasao: 'https://logodetimes.com/times/goias/logo-goias-novo-256.png',
+        brasao: 'https://logodetimes.com/times/goias/logo-goias-esporte-clube-256.png',
         cor: Colors.green[900],
         idAPI: 115,
       ),
