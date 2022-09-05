@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:times_curso_diego/database/db_firestore.dart';
 import 'package:times_curso_diego/pages/add_titulo_page.dart';
 import 'package:times_curso_diego/pages/edit_titulo_page.dart';
 import 'package:times_curso_diego/repositories/times_repositoty.dart';
@@ -17,9 +19,20 @@ class TimePage extends StatefulWidget {
 }
 
 class _TimePageState extends State<TimePage> {
-  tituloPage() {
+  FirebaseFirestore? db;
+  Stream<DocumentSnapshot>? torcedoresSnapshot;
 
-    Get.to(()=> AddTituloPage(time: widget.time),);
+  @override
+  void initState() {
+    super.initState();
+    db = DBFirestore.get();
+    torcedoresSnapshot = db?.doc('times/${widget.time!.id}').snapshots();
+  }
+
+  tituloPage() {
+    Get.to(
+      () => AddTituloPage(time: widget.time),
+    );
 
     // Navigator.push(
     //   context,
@@ -75,7 +88,17 @@ class _TimePageState extends State<TimePage> {
                   style: const TextStyle(
                     fontSize: 22,
                   ),
-                )
+                ),
+                StreamBuilder<DocumentSnapshot>(
+                  stream: torcedoresSnapshot,
+                  builder: (context, snapshot) {
+                    return Text(
+
+                      'Torcedores ${snapshot.data != null?['torcedores'] == null : '0'}',
+                      style: TextStyle(fontSize: 22),
+                    );
+                  },
+                ),
               ],
             ),
             titulos(),
@@ -86,8 +109,6 @@ class _TimePageState extends State<TimePage> {
   }
 
   titulos() {
-
-
     final time = Provider.of<TimesRepository>(context)
         .times
         .firstWhere((t) => t.nome == widget.time!.nome);

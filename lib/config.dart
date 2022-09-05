@@ -20,7 +20,6 @@ initConfigurations() async {
   // FirebaseFirestore.instance.settings =
   //     Settings(host: 'localhost:8080', sslEnabled: false);
 
-
   //GetX bindings
   Get.lazyPut<ThemeController>(() => ThemeController());
   Get.lazyPut<AuthService>(() => AuthService());
