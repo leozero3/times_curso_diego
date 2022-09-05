@@ -14,8 +14,11 @@ initConfigurations() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  FirebaseFirestore.instance.settings =
-      Settings(host: 'localhost:8080', sslEnabled: false);
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  firestore.useFirestoreEmulator('10.0.2.2', 8080,sslEnabled: false);
+
+  // FirebaseFirestore.instance.settings =
+  //     Settings(host: 'localhost:8080', sslEnabled: false);
 
 
   //GetX bindings
