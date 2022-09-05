@@ -31,31 +31,33 @@ class _HomePageState extends State<HomePage> {
     List<SimpleDialogOption> items = [];
 
     times.forEach((time) {
-      items.add(SimpleDialogOption(
-        child: Row(
-          children: [
-            Brasao(image: time.brasao!, width: 30),
-            Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Text(time.nome!),
-            )
-          ],
+      items.add(
+        SimpleDialogOption(
+          child: Row(
+            children: [
+              Brasao(image: time.brasao!, width: 30,),
+              Padding(
+                padding: EdgeInsets.only(left: 16),
+                child: Text(time.nome!),
+              ),
+            ],
+          ),
+          onPressed: () {
+            Get.find<AuthService>().definirTime(time);
+            Get.back();
+          },
         ),
-        onPressed: () {
-          Get.find<AuthService>().definirTime(time);
-          Get.back();
-        },
-      ));
+      );
     });
 
     final SimpleDialog dialog = SimpleDialog(
       title: Text('Escolha sua torcida'),
-      children: items,
       insetPadding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.height / 6),
+      children: items,
     );
-    
-    showDialog(context: context, builder: (_)=> dialog);
+
+    showDialog(context: context, builder: (_) => dialog);
   }
 
   @override
@@ -104,9 +106,9 @@ class _HomePageState extends State<HomePage> {
                 child: ListTile(
                   leading: const Icon(Icons.sports_soccer),
                   title: const Text('Escolher Torcida'),
-                  onTap: () {
-                    showEscolherTime();
-                  },
+                  onTap: () =>
+                    showEscolherTime(),
+
                 ),
               ),
               PopupMenuItem(

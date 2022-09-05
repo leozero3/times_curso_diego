@@ -20,7 +20,9 @@ class DB {
 
   //INICIALIZA E ABRE O BANCO
   initDataBase() async {
-    return await openDatabase(join(await getDatabasesPath(), 'dadostimes_api1.db'), // return await openDatabase(join(await getDatabasesPath(), 'dados.db'),
+    return await openDatabase(
+        // join(await getDatabasesPath(), 'dadostimes_api1.db'),
+        join(await getDatabasesPath(), 'dadostimes_api3.db'), // return await openDatabase(join(await getDatabasesPath(), 'dados.db'),
         version: 1, onCreate: (db, versao) async {
       await db.execute(times);
       await db.execute(titulos);

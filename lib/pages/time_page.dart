@@ -92,10 +92,10 @@ class _TimePageState extends State<TimePage> {
                 StreamBuilder<DocumentSnapshot>(
                   stream: torcedoresSnapshot,
                   builder: (context, snapshot) {
+                    final torcedores =
+                    snapshot.data!.exists ? snapshot.data!['torcedores'] : 0;
                     return Text(
-
-                      'Torcedores ${snapshot.data?['torcedores']}',
-                      // 'Torcedores ${snapshot.data != null?['torcedores'] == null : '0'}',
+                      'Torcedores: $torcedores',
                       style: TextStyle(fontSize: 22),
                     );
                   },

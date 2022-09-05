@@ -42,8 +42,6 @@ class AuthService extends GetxController {
     }catch (e){
       showSnack('Erro ao definir time', e.toString());
     }
-
-
   }
 
   showSnack(String titulo, String erro) {
