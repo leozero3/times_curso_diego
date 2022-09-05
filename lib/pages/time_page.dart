@@ -94,7 +94,8 @@ class _TimePageState extends State<TimePage> {
                   builder: (context, snapshot) {
                     return Text(
 
-                      'Torcedores ${snapshot.data != null?['torcedores'] == null : '0'}',
+                      'Torcedores ${snapshot.data?['torcedores']}',
+                      // 'Torcedores ${snapshot.data != null?['torcedores'] == null : '0'}',
                       style: TextStyle(fontSize: 22),
                     );
                   },
